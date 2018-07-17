@@ -1,0 +1,64 @@
+{% extends "backend_user/base.html" %}
+
+{% block content %}
+{% load static %}
+<div class="row" >
+
+	<div class="card-box">
+		
+
+		<ul class="nav nav-pills navtab-bg nav-justified pull-in ">
+			<li class="nav-item">
+				<a href="#home1" data-toggle="tab" aria-expanded="false" class="nav-link">
+					<i class="fi-monitor mr-2"></i> Home
+				</a>
+			</li>
+			<li class="nav-item">
+				<a href="#profile1" data-toggle="tab" aria-expanded="true" class="nav-link active">
+					<i class="fi-head mr-2"></i>Profile
+				</a>
+			</li>
+			<li class="nav-item">
+				<a href="#messages1" data-toggle="tab" aria-expanded="false" class="nav-link">
+					<i class="fi-mail mr-2"></i> Messages
+				</a>
+			</li>
+			<li class="nav-item">
+				<a href="#settings1" data-toggle="tab" aria-expanded="false" class="nav-link">
+					<i class="fi-cog mr-2"></i> Settings
+				</a>
+			</li>
+		</ul>
+		<!--start-content-->
+		<div class="tab-content">
+			<div class="tab-pane" id="home1">
+				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
+				<p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
+			</div>
+			<div class="tab-pane show active" id="profile1">
+				<p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
+				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
+			</div>
+			<div class="tab-pane" id="messages1">
+				<div class="col-md-6 col-lg-5"  >
+					<!-- Simple card -->
+					<div class="card m-b-30" >
+						<img class="card-img-top img-fluid" src="{% static 'backend_user/assets/images/small/img-1.jpg' %}" alt="Card image cap">
+						<div class="card-body">
+							<h5 class="card-title">fffff</h5>
+							<p class="card-text">prix : fff || quantite : ccc</p>
+							<a href="#" class="btn btn-custom waves-effect waves-light" v-on:click="add_item(prod)">achete</a>
+						</div>
+					</div>
+			
+				</div>
+			</div>
+			<div class="tab-pane" id="settings1">
+				<p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
+				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
+			</div>
+		</div>
+
+</div><!-- end row -->
+</div>
+{% endblock content %}

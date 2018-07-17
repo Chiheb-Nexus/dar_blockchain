@@ -1,0 +1,20 @@
+{% load static %}
+
+
+<div class="row" >
+		{% for item in produits %}
+		<div class="col-md-6 col-lg-3">
+			<!-- Simple card -->
+			<div class="card m-b-30" >
+				<img class="card-img-top img-fluid" src="{% static 'backend_user/assets/images/small/img-1.jpg' %}" alt="Card image cap">
+				<div class="card-body">
+					<h5 class="card-title">{{item.product}}</h5>
+					
+					<p class="card-text"><span id ="'p-{{ item.uuid }}' ">prix = {{item.price}} </span> || <span id ="'qte-{{ item.uuid }}' "> quantite = {{item.quantity}}</span> </p>
+					<a href="#" class="btn btn-custom waves-effect waves-light" onclick="acheterProduit('{{ item.uuid }}')">achete</a>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+</div>
+

@@ -1,0 +1,404 @@
+<!DOCTYPE html>	
+<html>
+    <head>
+
+	  
+	
+        <meta charset="utf-8" />
+        <title>Highdmin - Responsive Bootstrap 4 Admin Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		
+		{% load static %}
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static "backend_user/assets/images/favicon.ico" %}">
+
+		<!-- App css -->
+
+		      <!-- Toastr css -->
+		<link href="{% static "backend_user/assets/plugin/jquery-toastr/jquery.toast.min.css" %}" rel="stylesheet" />
+        <link href="{% static "backend_user/assets/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css" />
+        <link href="{% static "backend_user/assets/css/icons.css" %}" rel="stylesheet" type="text/css" />
+        <link href="{% static "backend_user/assets/css/metismenu.min.css" %}" rel="stylesheet" type="text/css" />
+        <link href="{% static "backend_user/assets/css/style.css" %}" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src="{% static "backend_user/assets/js/modernizr.min.js" %}"></script>
+		<script src="https://unpkg.com/vue"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+			<!--cardProd css-->
+		<link rel="stylesheet" href="{% static "backend_user/assets/css/style-card-prod.css"%}" type="text/css" media="all">
+		<link rel="stylesheet" href="{% static "backend_user/assets/css/style-card-prod.css"%}" type="text/css" media="all">
+ 	</head>
+	
+	<body>
+	
+
+
+			<!-- Begin page -->
+	        <div id="wrapper">
+
+
+
+
+				
+			
+                <!-- Top Bar Start -->
+                <div class="topbar">
+
+						<nav class="navbar-custom">
+	
+							<ul class="list-unstyled topbar-right-menu float-right mb-0">
+	
+								<li class="hide-phone app-search">
+									<form>
+										<input type="text" placeholder="Search..." class="form-control">
+										<button type="submit"><i class="fa fa-search"></i></button>
+									</form>
+								</li>
+
+								<li class="dropdown notification-list">
+									<a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button"
+									   aria-haspopup="false" aria-expanded="false">
+										<i class="fi-bell noti-icon"></i>
+										<span class="badge badge-danger badge-pill noti-icon-badge">0</span>
+									</a>
+									<div class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-lg">
+	
+										<!-- item-->
+										<div class="dropdown-item noti-title">
+											<h5 class="m-0"><span class="float-right"><a href="" class="text-dark"><small>Clear All</small></a> </span>Notification</h5>
+										</div>
+	
+										
+	
+										<!-- All-->
+										<a href=''  v-on:click='add_transaction()' class="dropdown-item text-center text-primary notify-item notify-all">
+											Effectué transaction <i class="fi-arrow-right"></i>
+											
+										</a>
+	
+									</div>
+								</li>
+	
+								<li class="dropdown notification-list">
+									<a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button"
+									   aria-haspopup="false" aria-expanded="false">
+									   <i class="fa fa-shopping-cart" style="font-size:24px"></i>
+										<span class="badge badge-custom badge-pill noti-icon-badge" id="panier">[[count]]</span>
+									</a>
+									<div class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-lg">
+
+										<!-- item-->
+										<div class="dropdown-item noti-title">
+											<h5 class="m-0"><span class="float-right"><a href="" class="text-dark"><small>Clear All</small></a> </span>Panier</h5>
+										</div>
+	
+										<div class="slimscroll" style="max-height: 230px;">
+											<!-- item-->
+											<div v-if="panier.length > 0">
+											<a href="javascript:void(0);" class="dropdown-item notify-item" v-for= "prod in panier">
+												<div class="notify-icon"><img src="{% static "backend_user/assets/images/users/avatar-1.jpg" %}" class="img-fluid" alt="" /> </div>
+												<p class="notify-details">[[prod.nom]]</p>
+												<p class="text-muted font-13 mb-0 user-msg"><span class="float-right">prix:[[prod.prix]]</span>quantite : [[prod.qte]]</p>
+											</a>
+										</div>
+											<div v-else>
+												<p class="notify-details font-13 col-13" style="color:red">Panier vide</p>
+											</div>
+										</div>
+	
+										<!-- All-->
+										<a href="javascript:void(0);" v-on:click='add_transaction()' class="dropdown-item text-center text-primary notify-item notify-all">
+											Effectué transaction <i class="fi-arrow-right"></i>
+										</a>
+	
+									</div>
+								
+								</li>
+	
+								<li class="dropdown notification-list">
+									<a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" role="button"
+									   aria-haspopup="false" aria-expanded="false">
+										<img src="{% static "backend_user/assets/images/users/avatar-1.jpg" %}" alt="user" class="rounded-circle"> <span class="ml-1">{{currentuser.user.username}}<i class="mdi mdi-chevron-down"></i> </span>
+									</a>
+									<div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown ">
+										<!-- item-->
+										<div class="dropdown-item noti-title">
+											<h6 class="text-overflow m-0">Welcome !</h6>
+											<div hidden ref="uuid">{{uuid}}</div>
+											<div hidden ref="uuiddar">{{uuiddar}}</div>
+										</div>
+	
+										<!-- item-->
+										<a href="javascript:void(0);" class="dropdown-item notify-item">
+											<i class="fi-head"></i> <span>My Account</span>
+										</a>
+	
+										<!-- item-->
+										<a href="javascript:void(0);" class="dropdown-item notify-item">
+											<i class="fi-cog"></i> <span>Settings</span>
+										</a>
+	
+										<!-- item-->
+										<a href="javascript:void(0);" class="dropdown-item notify-item">
+											<i class="fi-help"></i> <span>Support</span>
+										</a>
+	
+										<!-- item-->
+										<a href="javascript:void(0);" class="dropdown-item notify-item">
+											<i class="fi-lock"></i> <span>Lock Screen</span>
+										</a>
+	
+										<!-- item-->
+										<a href="{% url 'dar:logout' %}" class="dropdown-item notify-item">
+											 <i class="fi-power"></i> <span>Logout</span>
+										</a>
+	
+									</div>
+								</li>
+	
+							</ul>
+						</nav>
+	
+					</div>
+					<!-- Top Bar End -->
+	
+					<div class="card-box">
+			                <!-- Page-Title -->
+							<div class="row">
+									<div class="col-sm-12">
+										<div class="page-title-box">
+											<div class="btn-group pull-right">
+												<ol class="breadcrumb hide-phone p-0 m-0" id ="map">
+													<li class="breadcrumb-item"><a href="#">Highdmin</a></li>
+													<li class="breadcrumb-item active" id='dashboard'>Dashboard</li>
+												</ol>
+											</div>
+											<h4 class="page-title">Dashboard</h4>
+										</div>
+									</div>
+								</div>
+								<!-- end page title end breadcrumb -->
+						
+						<ul class="nav nav-pills navtab-bg nav-justified pull-in ">
+							<li class="nav-item">
+								<a href="#home1" data-toggle="tab" aria-expanded="false" class="nav-link active">
+									<i class="fi-monitor mr-2"></i> Home
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="#historique" data-toggle="tab" aria-expanded="true" class="nav-link " v-on:click="get_historique">
+									<i class="fi-head mr-2"></i>Historique
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="#messages1" data-toggle="tab" aria-expanded="false" class="nav-link">
+									<i class="fi-mail mr-2"></i> Messages
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="#settings1" data-toggle="tab" aria-expanded="false" class="nav-link">
+									<i class="fi-cog mr-2"></i> Settings
+								</a>
+							</li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane active" id="home1" >
+								
+									<div class="card-box">
+										<h4 class="header-title m-t-0 m-b-30">Tabs Vertical Left</h4>
+	
+										<div class="tabs-vertical-env">
+											<ul class="nav tabs-vertical">
+												<li class="nav-item">
+													<a href="#v-home" data-toggle="tab" aria-expanded="false" class="nav-link active">
+														<i class="fi-monitor mr-2"></i> Produit
+													</a>
+												</li>
+												<li class="nav-item">
+													<a href="#v-profile" data-toggle="tab" aria-expanded="true" class="nav-link ">
+														<i class="fi-head mr-2"></i>Formation
+													</a>
+												</li>
+												<li class="nav-item">
+													<a href="#v-messages" data-toggle="tab" aria-expanded="false" class="nav-link">
+														<i class="fi-mail mr-2"></i> Messages
+													</a>
+												</li>
+												<li class="nav-item">
+													<a href="#v-settings" data-toggle="tab" aria-expanded="false" class="nav-link">
+														<i class="fi-cog mr-2"></i> Settings
+													</a>
+												</li>
+											</ul>
+	
+											<div class="tab-content">
+										
+											<div class="tab-pane active" id="v-home">
+												<div class="row">
+													<div class="col-md-6 col-lg-3" v-if="prodIsLoaded" v-for = "prod in product">
+														<!-- Simple product -->
+														<div class="card m-b-30" >
+															<img class="card-img-top img-fluid" src="{% static 'backend_user/assets/images/small/img-1.jpg' %}" alt="Card image cap">
+															<div class="card-body">
+																<h5 class="card-title">[[ prod.product]]</h5>
+																<p class="card-description">price : [[prod.price]] || quantite : [[prod.quantity]]</p>
+																<a href="#" class="btn btn-custom waves-effect waves-light" v-on:click="add_item(prod)">achete</a>
+															</div>
+														</div>
+													</div>
+												</div>			 
+												
+											</div>
+												<div class="tab-pane " id="v-profile">
+													<!--formation-->
+													<div class="row">
+															<div class="col-md-6 col-lg-3" v-if="formIsLoaded" v-for = "form in arr_formation">
+																<!-- Simple product -->
+																<div class="card m-b-30" >
+																	<img class="card-img-top img-fluid" src="{% static 'backend_user/assets/images/small/img-1.jpg' %}" alt="Card image cap">
+																	<div class="card-body">
+																		<h5 class="card-title">[[ form.titre]]</h5>
+																		<p class="card-description">price : [[form.price]] || place-restant : [[form.place]]</p>
+																		<a href="#" class="btn btn-custom waves-effect waves-light" v-on:click="add_item_formation(form)">achete</a>
+																	</div>
+																</div>
+															</div>
+														</div>	
+
+  												</div>
+												<div class="tab-pane" id="v-messages">
+													<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
+													<p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
+												</div>
+												<div class="tab-pane" id="v-settings">
+													<p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
+													<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
+												</div>
+											</div>
+										</div>
+									</div>
+													
+							</div>
+							<div class="tab-pane show " id="historique" >
+								                                    <!-- Signup modal content -->
+																	<div id="login-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel" aria-hidden="true" style="display: none;">
+																			<div class="modal-dialog">
+																				<div class="modal-content">
+																					<div class="modal-body">
+																						<h2 class="text-uppercase text-center m-b-30">
+																							<a href="index.html" class="text-success">
+																								<span><img src="assets/images/logo.png" alt="" height="28"></span>
+																							</a>
+																						</h2>
+																						<p v-if="loading_trans_formation == false"> pas de transation de formation </p>
+																						<div v-else>
+
+																								<ul>
+																										<li v-for="item in trans_formation">nom : [[item.nom]] || prix : [[item.prix]]</li>
+																								</ul>
+																			
+																						</div> 
+																						<p v-if="loading_panier == false"> pas de panier disponible </p>
+																						<div v-else>
+
+																								<ul>
+																										<li v-for="item in trans_prod">nom : [[item.nom]] || prix : [[item.prix]]</li>
+																								</ul>
+																			
+																						</div> 
+									
+																					</div>
+																				</div><!-- /.modal-content -->
+																			</div><!-- /.modal-dialog -->
+																		</div><!-- /.modal -->
+									<table id="demo-foo-pagination" class="table m-b-0 table-bordered toggle-arrow-tiny" data-page-size="5">
+											<thead>
+											<tr>
+												<th data-toggle="true">montant </th>
+												<th> date </th>
+												<th data-hide="all"> tx_hash </th>
+												<th data-hide="all"> Status </th>
+												<th>detail</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr v-for = "item in arr_historique">
+												<td>[[item.montant]]</td>
+												<td>[[item.date]]</td>
+												<td> <a :href="'https://ropsten.etherscan.io/tx/' + [[item.tx_hash]]" target="_blank">
+													[[item.tx_hash]]
+												</td>
+												</a>
+												<td><span class="badge label-table badge-success">Active</span></td>
+												<td> <button type="button" class="btn btn-info waves-effect waves-light" data-toggle="modal" data-target="#login-modal" v-on:click="get_panier_byUUID(item._uuid)">Show detail</button></td>
+											</tr>									
+											</tbody>
+											<tfoot>
+											<tr class="active">
+												<td colspan="5">
+													<div class="text-right">
+														<ul class="pagination pagination-split justify-content-end footable-pagination m-t-10"></ul>
+													</div>
+												</td>
+											</tr>
+											</tfoot>
+										</table>
+		
+ 							</div>
+							<div class="tab-pane" id="messages1">
+								<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
+								<p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
+							</div>
+							<div class="tab-pane" id="settings1">
+								<p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
+								<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
+							</div>
+						</div>
+					</div>
+		
+		
+		
+				<footer class="footer">
+						2018 © Highdmin. - Coderthemes.com
+ 					</footer>
+		
+				
+		
+			</div><!-- END wrapper -->
+			
+
+
+
+
+          <!-- jQuery  -->
+		  <script src="{% static 'backend_user/assets/js/jquery.min.js' %}"> </script>
+		  <script src="{% static 'backend_user/assets/js/popper.min.js' %}"> </script>
+		  <script src="{% static 'backend_user/assets/js/bootstrap.min.js' %}"></script>
+		  <script src="{% static 'backend_user/assets/js/metisMenu.min.js' %}"></script>
+		  <script src="{% static 'backend_user/assets/js/waves.js' %}"></script>
+		  <script src="{% static 'backend_user/assets/js/jquery.slimscroll.js' %}"></script>
+		  
+		  <!-- Toastr js -->
+		  <script src="{% static 'backend_user/assets/plugin/jquery-toastr/jquery.toast.min.js' %}" type="text/javascript"></script>
+	        <!--FooTable-->
+			<script src="{% static 'backend_user/assets/plugin/footable/js/footable.all.min.js' %}"></script>
+			<!--FooTable Example-->
+			<script src="{% static 'backend_user/assets/js/jquery.footable.js' %}"></script>
+	
+		  <!-- App js -->
+		  <script src="{% static 'backend_user/assets/js/jquery.core.js' %}"></script>
+		  <script src="{% static 'backend_user/assets/js/jquery.app.js' %}"></script>
+		  <!-- Vue JS -->
+		  <script src="{% static 'backend_user/assets/js/base_index.js' %}"></script>
+
+
+
+	 <!-- //cart-js -->
+
+
+	</body>
+
+	</html>

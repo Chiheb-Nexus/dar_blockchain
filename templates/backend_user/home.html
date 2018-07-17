@@ -1,0 +1,22 @@
+{% extends "backend_user/base.html" %}
+{% load static %}
+
+
+{% block home %}
+
+<div class="row" >	
+	<p>llllllll</p>
+
+		<div class="col-md-6 col-lg-3"  v-for = "prod in arr_salle">
+			<!-- Simple card -->
+			<div class="card m-b-30" >
+				<img class="card-img-top img-fluid" src="{% static 'backend_user/assets/images/small/img-1.jpg' %}" alt="Card image cap">
+				<div class="card-body">
+					<h5 class="card-title">[[ prod.fonction]]</h5>
+					<a href="#" class="btn btn-custom waves-effect waves-light" v-on:click="get_produit(prod.uuid)">achete</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock home %}

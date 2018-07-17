@@ -1,0 +1,19 @@
+{% load static %}
+
+<div id="home" v-if="hide_home">
+<div class="row" >
+	{% for salle in salles  %}
+	  
+		<div class="col-md-6 col-lg-3">
+			<!-- Simple card -->
+			<div class="card m-b-30" >
+				<img class="card-img-top img-fluid" src="{% static 'backend_user/assets/images/small/img-1.jpg' %}" alt="Card image cap">
+				<div class="card-body">
+					<h5 class="card-title">{{ salle.nom_salle}}</h5>
+					<a href="#" class="btn btn-custom waves-effect waves-light" id="btn"  onclick="getProduct('{{ salle.uuid }}');">achedddddte</a>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>

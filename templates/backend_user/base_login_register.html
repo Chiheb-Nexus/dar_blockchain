@@ -1,0 +1,31 @@
+{% load static %}
+<html>
+		<head>
+				<!-- App favicon -->
+				<link rel="shortcut icon" href="{% static "backend_user/assets/images/favicon.ico" %}">
+		
+				<!-- App css -->
+				<link href="{% static "backend_user/assets/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css" />
+				<link href="{% static "backend_user/assets/css/icons.css" %}"rel="stylesheet" type="text/css" />
+				<link href="{% static "backend_user/assets/css/metismenu.min.css" %}"rel="stylesheet" type="text/css" />
+				<link href="{% static "backend_user/assets/css/style.css" %}" rel="stylesheet" type="text/css" />
+		
+				<script src="{% static "backend_user/assets/js/modernizr.min.js" %}"></script>
+		</head>
+
+	{% block 'body-login-register' %}
+	{% endblock 'body-login-register' %}
+	         <!-- jQuery  -->
+			 <script src="{% static 'backend_user/assets/js/jquery.min.js' %}"> </script>
+			 <script src="{% static 'backend_user/assets/js/popper.min.js' %}"> </script>
+			 <script src="{% static 'backend_user/assets/js/bootstrap.min.js' %}"></script>
+			 <script src="{% static 'backend_user/assets/js/metisMenu.min.js' %}"></script>
+			 <script src="{% static 'backend_user/assets/js/waves.js' %}"></script>
+			 <script src="{% static 'backend_user/assets/js/jquery.slimscroll.js' %}"></script>
+			 
+
+			 <!-- App js -->
+			 <script src="{% static 'backend_user/assets/js/jquery.core.js' %}"></script>
+			 <script src="{% static 'backend_user/assets/js/jquery.app.js' %}"></script>
+	   
+</html>
